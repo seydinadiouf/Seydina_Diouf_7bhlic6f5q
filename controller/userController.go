@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/echo/v4"
+	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"school-manager/config"
 	"school-manager/model"
@@ -29,13 +30,23 @@ func SignIn(c echo.Context) error {
 
 		return c.JSON(http.StatusInternalServerError, data)
 	}
+	message := "Username or password incorrect"
 
 	if res := db.Where("username = ?", signIn.Username).First(&user); res.Error != nil {
 		data := map[string]interface{}{
-			"message": res.Error.Error(),
+			"message": message,
 		}
 
-		return c.JSON(http.StatusOK, data)
+		return c.JSON(http.StatusUnauthorized, data)
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(signIn.Password), []byte(user.Password)); err != nil {
+		// If the two passwords don't match, return a 401 status
+		data := map[string]interface{}{
+			"message": message,
+		}
+
+		return c.JSON(http.StatusUnauthorized, data)
 	}
 
 	// Set custom claims
