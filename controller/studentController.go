@@ -8,6 +8,7 @@ import (
 	"school-manager/config"
 	"school-manager/model"
 	"school-manager/model/payload"
+	"strings"
 )
 
 func GetStudents(c echo.Context) error {
@@ -32,8 +33,8 @@ func GetStudents(c echo.Context) error {
 		"FROM students s "+
 		"LEFT JOIN classes c ON s.school_class_id = c.school_class_id "+
 		"LEFT JOIN teachers t ON c.school_class_id = t.school_class_id "+
-		"WHERE (@IsSchoolClassNameNull OR c.school_class_name = @SchoolClassName) "+
-		"AND (@IsTeacherNameNull OR  t.teacher_name = @TeacherName)", NamedArgument{IsSchoolClassNameNull: IsSchoolClassNameNull, SchoolClassName: SchoolClassName, IsTeacherNameNull: IsTeacherNameNull, TeacherName: TeacherName}).
+		"WHERE (@IsSchoolClassNameNull OR  LOWER(c.school_class_name) = @SchoolClassName) "+
+		"AND (@IsTeacherNameNull OR  LOWER(t.teacher_name) = @TeacherName)", NamedArgument{IsSchoolClassNameNull: IsSchoolClassNameNull, SchoolClassName: strings.ToLower(SchoolClassName), IsTeacherNameNull: IsTeacherNameNull, TeacherName: strings.ToLower(TeacherName)}).
 		Model(&model.Student{}); res.Error != nil {
 
 		data := map[string]interface{}{
