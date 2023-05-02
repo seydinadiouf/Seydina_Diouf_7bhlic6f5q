@@ -5,6 +5,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"school-manager/config"
 	"school-manager/controller"
+	"school-manager/middlewares"
 )
 
 func main() {
@@ -33,7 +34,10 @@ func main() {
 	userRoute.POST("/", controller.SignIn)
 
 	studentRoute := e.Group("/students")
+	studentRoute.Use(middlewares.Auth())
+
 	studentRoute.GET("", controller.GetStudents)
+	studentRoute.POST("/add-student-to-class", controller.AddStudentToClass)
 
 	e.Logger.Fatal(e.Start(":9090"))
 }
