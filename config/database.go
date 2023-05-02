@@ -2,20 +2,28 @@ package config
 
 import (
 	"fmt"
-
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"os"
+	"strconv"
 )
 
 var database *gorm.DB
 var e error
 
 func DatabaseInit() {
-	host := "localhost"
-	user := "seydina"
-	password := "passer123"
-	dbName := "school_manager"
-	port := 5432
+	// Load the environment variables from the .env file
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file:", err)
+	}
+
+	host := os.Getenv("DB_HOST")
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	dbName := os.Getenv("DB_NAME")
+	port, _ := strconv.Atoi(os.Getenv("DB_PORT"))
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable", host, user, password, dbName, port)
 	database, e = gorm.Open(postgres.Open(dsn), &gorm.Config{})

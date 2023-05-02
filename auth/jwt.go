@@ -2,11 +2,12 @@ package auth
 
 import (
 	"errors"
+	"fmt"
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/joho/godotenv"
+	"os"
 	"time"
 )
-
-var jwtKey = []byte("my_jwt_secret_key")
 
 type JwtCustomClaims struct {
 	Username string `json:"username"`
@@ -14,6 +15,14 @@ type JwtCustomClaims struct {
 }
 
 func GenerateJWT(username string) (tokenString string, err error) {
+	// Load the environment variables from the .env file
+	envErr := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file:", envErr)
+	}
+
+	var jwtKey = []byte(os.Getenv("JWT_SECRET"))
+
 	expirationTime := time.Now().Add(72 * time.Hour)
 
 	claims := &JwtCustomClaims{
@@ -28,6 +37,14 @@ func GenerateJWT(username string) (tokenString string, err error) {
 }
 
 func ValidateToken(signedToken string) (err error) {
+	// Load the environment variables from the .env file
+	envErr := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file:", envErr)
+	}
+
+	var jwtKey = []byte(os.Getenv("JWT_SECRET"))
+
 	token, err := jwt.ParseWithClaims(
 		signedToken,
 		&JwtCustomClaims{},
