@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package proto;
+
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "student.proto";
+import "user.proto";
+
+option go_package = "./proto";
+
+
+service SchoolManagerService {
+
+  rpc getStudentsWithFilter(GetStudentRequest) returns (StudentsPage){
+    option (google.api.http) = {
+      get: "/students"
+    };
+  }
+
+  rpc signIn(SignInRequest) returns (SignInResponse){
+    option (google.api.http) = {
+      post: "/login"
+      body: "*"
+    };
+  }
+
+  rpc AddStudentToClass(CreateStudentRequest) returns (Student){
+    option (google.api.http) = {
+      post: "/students/add-student-to-class"
+      body: "*"
+    };
+  }
+
+
+}

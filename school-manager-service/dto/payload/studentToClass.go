@@ -1,6 +1,6 @@
 package payload
 
 type StudentToClass struct {
-	StudentID       int    `json:"studentId"`
+	StudentName     string `json:"studentName"`
 	SchoolClassName string `json:"schoolClassName"`
 }

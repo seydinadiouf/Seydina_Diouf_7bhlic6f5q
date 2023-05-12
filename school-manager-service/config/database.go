@@ -6,6 +6,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"os"
+	"school-manager/school-manager-service/model"
 	"strconv"
 )
 
@@ -27,6 +28,11 @@ func DatabaseInit() {
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable", host, user, password, dbName, port)
 	database, e = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	errorMigration := database.AutoMigrate(&model.SchoolClass{})
+	if errorMigration != nil {
+		fmt.Println("Error migrating database :", errorMigration)
+	}
 
 	if e != nil {
 		panic(e)

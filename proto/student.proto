@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "./proto";
+
+import "google/api/annotations.proto";
+
+import "validate/validate.proto";
+
+message Student {
+  int64 studentId = 1;
+  string studentName = 2;
+  SchoolClass schoolClass = 3;
+}
+
+message SchoolClass {
+    int64 schoolClassId = 1;
+    string schoolClassName = 2;
+    Teacher teacher = 3;
+}
+
+message Teacher {
+  int64 teacherId = 1;
+  string teacherName = 2;
+}
+
+message GetStudentRequest {
+  string schoolClassName = 1;
+  string teacherName = 2;
+  string limit = 3;
+  string offset = 4;
+}
+
+message CreateStudentRequest {
+  string schoolClassName = 1 [(validate.rules).message.required = true];
+  string studentName = 2 [(validate.rules).message.required = true];
+}
+
+message StudentsPage {
+  int64 totalCount = 1;
+  int64 pageCount = 2;
+  int64 pageNumber = 3;
+  int64 pageSize = 4;
+  repeated Student students = 5;
+}
+
+

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "./proto";
+
+message SignInRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message SignInResponse {
+  string username = 1;
+  string token = 2;
+}
+
