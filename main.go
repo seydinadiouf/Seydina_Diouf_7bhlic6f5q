@@ -1,12 +1,15 @@
 package main
 
 import (
+	grpcmiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
+	"github.com/grpc-ecosystem/go-grpc-middleware/validator"
 	"google.golang.org/grpc"
 	"log"
 	"net"
+	"school-manager/config"
 	pb "school-manager/proto"
-	"school-manager/school-manager-service/config"
-	"school-manager/school-manager-service/server"
+	"school-manager/server"
 )
 
 func main() {
@@ -34,7 +37,10 @@ func main() {
 
 	log.Printf("Listening at %s\n", addr)
 
-	s := grpc.NewServer()
+	s := grpc.NewServer(grpc.UnaryInterceptor(grpcmiddleware.ChainUnaryServer(
+		grpc_validator.UnaryServerInterceptor(),
+		grpc_recovery.UnaryServerInterceptor(),
+	)))
 	pb.RegisterSchoolManagerServiceServer(s, &server.Server{})
 
 	if err := s.Serve(lis); err != nil {

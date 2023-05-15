@@ -2,9 +2,9 @@ package service
 
 import (
 	"math"
-	"school-manager/school-manager-service/config"
-	"school-manager/school-manager-service/dto"
-	"school-manager/school-manager-service/model"
+	"school-manager/config"
+	"school-manager/dto"
+	"school-manager/model"
 	"strconv"
 	"strings"
 )

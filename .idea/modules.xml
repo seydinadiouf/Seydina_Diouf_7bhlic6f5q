@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/school-manager.iml" filepath="$PROJECT_DIR$/.idea/school-manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../school-manager-auth/.idea/school-manager-auth.iml" filepath="$PROJECT_DIR$/../school-manager-auth/.idea/school-manager-auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../school-manager-gateway/.idea/school-manager-gateway.iml" filepath="$PROJECT_DIR$/../school-manager-gateway/.idea/school-manager-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../school-manager-proto/.idea/school-manager-proto.iml" filepath="$PROJECT_DIR$/../school-manager-proto/.idea/school-manager-proto.iml" />
     </modules>
   </component>
 </project>

@@ -6,7 +6,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"os"
-	"school-manager/school-manager-service/model"
+	"school-manager/model"
 	"strconv"
 )
 

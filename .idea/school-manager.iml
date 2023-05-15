@@ -5,5 +5,8 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="school-manager-gateway" />
+    <orderEntry type="module" module-name="school-manager-auth" />
+    <orderEntry type="module" module-name="school-manager-proto" />
   </component>
 </module>

@@ -1,7 +1,7 @@
 package dto
 
 import (
-	"school-manager/school-manager-service/model"
+	"school-manager/model"
 )
 
 type SchoolClassDTO struct {

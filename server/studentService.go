@@ -7,11 +7,11 @@ import (
 	"google.golang.org/grpc/status"
 	"gorm.io/gorm"
 	"log"
+	"school-manager/config"
+	"school-manager/dto/payload"
+	model2 "school-manager/model"
 	pb "school-manager/proto"
-	"school-manager/school-manager-service/config"
-	"school-manager/school-manager-service/dto/payload"
-	"school-manager/school-manager-service/model"
-	"school-manager/school-manager-service/service"
+	"school-manager/service"
 	"strings"
 )
 
@@ -80,7 +80,7 @@ func (*Server) AddStudentToClass(ctx context.Context, in *pb.CreateStudentReques
 		)
 	}
 
-	student := model.Student{StudentName: requestBody.StudentName, SchoolClassID: schoolClass.SchoolClassID}
+	student := model2.Student{StudentName: requestBody.StudentName, SchoolClassID: schoolClass.SchoolClassID}
 
 	res := db.Create(&student)
 
@@ -104,8 +104,8 @@ func (*Server) AddStudentToClass(ctx context.Context, in *pb.CreateStudentReques
 	return studentPb, nil
 }
 
-func getSchoolClassByName(db *gorm.DB, schoolClassName string) (*model.SchoolClass, error) {
-	var schoolClass model.SchoolClass
+func getSchoolClassByName(db *gorm.DB, schoolClassName string) (*model2.SchoolClass, error) {
+	var schoolClass model2.SchoolClass
 	if err := db.Where("LOWER(school_class_name) = ?", strings.ToLower(schoolClassName)).First(&schoolClass).Error; err != nil {
 		return nil, err
 	}
